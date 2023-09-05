@@ -1,5 +1,13 @@
+import { useState } from "react";
+
 /* eslint-disable react/prop-types */
-const Card = ({ post }) => {
+const Card = ({ post, socket, user }) => {
+  const [isLiked, setIsLiked] = useState(false)
+
+  const handleNotification = () => {
+    setIsLiked(true)
+  }
+  
   return (
     <div className="Card">
       <div className="container">
@@ -14,6 +22,7 @@ const Card = ({ post }) => {
             <div className="postimage">
               <img src={post.postImage} alt="" />
             </div>
+            {isLiked ? <b className="text-danger">LIKED</b> : <b onClick={handleNotification} className="text-gray">LIKED</b>}
           </div>
         </div>
       </div>

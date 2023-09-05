@@ -7,11 +7,17 @@ import { io } from "socket.io-client";
 const App = () => {
   const [user, setUser] = useState("");
   const [username, setUsername] = useState("");
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socket = io("http://localhost:3000")
-  }, [])
-  
+    setSocket(io("http://localhost:3000"));
+    console.log(socket);
+  }, []);
+
+  useEffect(() => {
+    socket.emit("newUser", user)
+  }, [socket, user])
+// 48
   return (
     <>
       <div className="App">
@@ -19,9 +25,9 @@ const App = () => {
           <div className="row">
             {user ? (
               <>
-                <Navbar />
+                <Navbar socket={socket} />
                 {posts.map((post) => (
-                  <Card key={post.id} post={post} />
+                  <Card socket={socket} user={user} key={post.id} post={post} />
                 ))}
                 <b>User: {user}</b>
               </>
